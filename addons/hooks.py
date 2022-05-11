@@ -106,7 +106,7 @@ app_license = "MIT"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
 # 	"all": [
 # 		"addons.tasks.all"
 # 	],
@@ -122,7 +122,10 @@ app_license = "MIT"
 # 	"monthly": [
 # 		"addons.tasks.monthly"
 # 	]
-# }
+	"cron": {
+		"0 9 * * *": ["addons.addons.email_report.sendmail"]
+	}
+}
 
 # Testing
 # -------
