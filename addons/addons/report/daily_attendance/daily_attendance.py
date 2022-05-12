@@ -23,13 +23,13 @@ def execute(filters=None):
 	data = frappe.db.sql("""
 			SELECT
 				emp.`employee`, emp.`employee_name`
-				, DATE_FORMAT(min(ec.time),"%H:%i:%s") `checkin`
-				, DATE_FORMAT(max(ec.time),"%H:%i:%s") `checkout`
+				, MAX(IF(ec.log_type = "IN",DATE_FORMAT(ec.time,"%H:%i:%s"),"")) `checkin`
+				, MAX(IF(ec.log_type = "OUT",DATE_FORMAT(ec.time,"%H:%i:%s"),"")) `checkout`
 				, timestampdiff(hour,min(ec.`time`),max(ec.time)) `Total Working Hours`
 			FROM `tabEmployee` `emp`
 			LEFT JOIN `tabEmployee Checkin` `ec` on ec.employee = emp.name AND DATE(time) = "{}"
 			
-			GROUP BY employee, DATE(time)
+			GROUP BY employee
 
 		""".format(date))
 	return columns, data
