@@ -27,8 +27,8 @@ def execute(filters=None):
 				, DATE_FORMAT(max(ec.time),"%H:%i:%s") `checkout`
 				, timestampdiff(hour,min(ec.`time`),max(ec.time)) `Total Working Hours`
 			FROM `tabEmployee` `emp`
-			LEFT JOIN `tabEmployee Checkin` `ec` on ec.employee = emp.name
-			WHERE DATE(time) = "{}"
+			LEFT JOIN `tabEmployee Checkin` `ec` on ec.employee = emp.name AND DATE(time) = "{}"
+			
 			GROUP BY employee, DATE(time)
 
 		""".format(date))
